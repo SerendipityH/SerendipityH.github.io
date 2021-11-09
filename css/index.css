@@ -1484,7 +1484,7 @@ body {
   background: var(--global-bg);
   color: var(--font-color);
   font-size: 16Px;
-  font-family: Microsoft YaHei;
+  font-family: simsun-extb;
   line-height: 2;
   -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
@@ -1598,7 +1598,7 @@ button {
 #site-name,
 #aside_content .author-info__name,
 #aside_content .author-info__description {
-  font-family: Microsoft YaHei;
+  font-family: simsun-extb;
 }
 .is-center {
   text-align: center;
@@ -1813,7 +1813,7 @@ blockquote footer cite:before {
 #article-container pre,
 #article-container code {
   font-size: 16Px;
-  font-family: Microsoft YaHei !important;
+  font-family: consolas, Menlo, 'PingFang SC', 'Microsoft YaHei', sans-serif !important;
 }
 #article-container code {
   padding: 0.1rem 0.2rem;
