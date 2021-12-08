@@ -1,0 +1,229 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MyBatis | serendipity</title><meta name="keywords" content="MyBatis,框架"><meta name="author" content="serendipity"><meta name="copyright" content="serendipity"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="Mybatis介绍什么是mybatismybatis参考网址：http:&#x2F;&#x2F;www.mybatis.org&#x2F;mybatis-3&#x2F;zh&#x2F;index.html  Mybatis是什么？MyBatis是一个优秀的持久层框架,它是一个半自动化的ORM框架它对使用JDBC操作数据库的过程进行封装，使开发者只需要关注 SQL 本身，而不需要花费精力去处理例如注册驱动、创建connection、创建statem">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MyBatis">
+<meta property="og:url" content="https://kthclose.top/post/1bff3c65.html">
+<meta property="og:site_name" content="serendipity">
+<meta property="og:description" content="Mybatis介绍什么是mybatismybatis参考网址：http:&#x2F;&#x2F;www.mybatis.org&#x2F;mybatis-3&#x2F;zh&#x2F;index.html  Mybatis是什么？MyBatis是一个优秀的持久层框架,它是一个半自动化的ORM框架它对使用JDBC操作数据库的过程进行封装，使开发者只需要关注 SQL 本身，而不需要花费精力去处理例如注册驱动、创建connection、创建statem">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/serendipityh/image/raw/master/img/mybatisCover.jpg">
+<meta property="article:published_time" content="2020-10-14T14:20:50.000Z">
+<meta property="article:modified_time" content="2021-04-21T13:28:53.988Z">
+<meta property="article:author" content="serendipity">
+<meta property="article:tag" content="MyBatis">
+<meta property="article:tag" content="框架">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/serendipityh/image/raw/master/img/mybatisCover.jpg"><link rel="shortcut icon" href="/image/butterfly/favicon.png"><link rel="canonical" href="https://kthclose.top/post/1bff3c65.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  hexoversion: '5.2.0',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  ClickShowText: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: true,
+  postUpdate: '2021-04-21 21:28:53'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {
+  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+
+  const autoChangeMode = 'false'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }
+})()</script><meta name="generator" content="Hexo 5.2.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/image/butterfly/avatar.jpeg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">28</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">17</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/categories/"><div class="headline">分类</div><div class="length_num">14</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div></div></div></div><div id="body-wrap"><div id="web_bg"></div><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Mybatis%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.</span> <span class="toc-text">Mybatis介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFmybatis"><span class="toc-number">1.1.</span> <span class="toc-text">什么是mybatis</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Mybatis%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3JDBC%E4%BB%A3%E7%A0%81%E4%B8%AD%E5%AD%98%E5%9C%A8%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-number">1.2.</span> <span class="toc-text">Mybatis如何解决JDBC代码中存在的问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Mybatis%E6%9E%B6%E6%9E%84%E5%8E%9F%E7%90%86"><span class="toc-number">1.3.</span> <span class="toc-text">Mybatis架构原理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1%E3%80%81MyBatis%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">1.3.1.</span> <span class="toc-text">1、MyBatis配置文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2%E3%80%81SqlSessionFactory"><span class="toc-number">1.3.2.</span> <span class="toc-text">2、SqlSessionFactory</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3%E3%80%81sqlSession"><span class="toc-number">1.3.3.</span> <span class="toc-text">3、sqlSession</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4%E3%80%81Executor%E6%89%A7%E8%A1%8C%E5%99%A8"><span class="toc-number">1.3.4.</span> <span class="toc-text">4、Executor执行器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5%E3%80%81Mapped-Statement"><span class="toc-number">1.3.5.</span> <span class="toc-text">5、Mapped Statement</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Mybatis"><span class="toc-number">2.</span> <span class="toc-text">Mybatis</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%92%8C-%E5%8C%BA%E5%88%AB"><span class="toc-number">2.1.</span> <span class="toc-text">#{}和${}区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Param%E6%B3%A8%E8%A7%A3"><span class="toc-number">2.2.</span> <span class="toc-text">@Param注解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MyBatis%E5%88%86%E9%A1%B5"><span class="toc-number">2.3.</span> <span class="toc-text">MyBatis分页</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E4%BE%9D%E8%B5%96"><span class="toc-number">2.3.1.</span> <span class="toc-text">添加依赖</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">2.3.2.</span> <span class="toc-text">配置文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B0%83%E7%94%A8PageHelper"><span class="toc-number">2.3.3.</span> <span class="toc-text">调用PageHelper</span></a></li></ol></li></ol></li></ol></div></div></div><header class="post-bg" id="page-header" style="background-image: url(https://gitee.com/serendipityh/image/raw/master/img/mybatisCover.jpg)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">serendipity</a></span><span id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div></div><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">MyBatis</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2020-10-14T14:20:50.000Z" title="发表于 2020-10-14 22:20:50">2020-10-14</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-04-21T13:28:53.988Z" title="更新于 2021-04-21 21:28:53">2021-04-21</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/MyBatis/">MyBatis</a></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><h2 id="Mybatis介绍"><a href="#Mybatis介绍" class="headerlink" title="Mybatis介绍"></a>Mybatis介绍</h2><h3 id="什么是mybatis"><a href="#什么是mybatis" class="headerlink" title="什么是mybatis"></a>什么是mybatis</h3><p>mybatis参考网址：<a target="_blank" rel="noopener" href="http://www.mybatis.org/mybatis-3/zh/index.html">http://www.mybatis.org/mybatis-3/zh/index.html</a></p>
+<ul>
+<li><strong>Mybatis是什么？</strong><br>MyBatis是一个优秀的<font style="color:red; font-weight:bold">持久层</font>框架,它是一个<font style="color:red; font-weight:bold">半自动化的ORM框架</font><br>它对使用JDBC操作数据库的过程进行封装，使开发者只需要关注 SQL 本身，而不需要花费精力去处理例如注册驱动、创建connection、创建statement、手动设置参数、结果集检索等jdbc繁杂的过程代码。</li>
+</ul>
+<ul>
+<li><strong>Mybatis的由来？</strong></li>
+</ul>
+<p> MyBatis 本是apache的一个开源项目iBatis<br> 2010年这个项目由apache software foundation 迁移到了   google code，并且改名为MyBatis 。2013年11月迁移到Github。 </p>
+<ul>
+<li><strong>Mybatis在哪写SQL语句？如何设置SQL参数和封装查询结果？</strong></li>
+</ul>
+<p> Mybatis通过<font style="color:#00FFFF; font-weight:bold">XML</font>或<font style="color:#00FFFF; font-weight:bold">注解</font>的方式，将要执行的各种statement（statement、preparedStatemnt、CallableStatement)配置起来<br> 并通过java对象和statement中的sql进行映射生成最终执行的sql语句，最后由mybatis框架sql并将结果映射成java对象并返回。</p>
+<h3 id="Mybatis如何解决JDBC代码中存在的问题"><a href="#Mybatis如何解决JDBC代码中存在的问题" class="headerlink" title="Mybatis如何解决JDBC代码中存在的问题"></a>Mybatis如何解决JDBC代码中存在的问题</h3><ol>
+<li>创建数据库连接相关操作，存在<font style="color:orange; font-weight:bold">硬编码</font><br>解决方案：通过Mybatis<font style="color:orange; font-weight:bold">全局配置文件</font>，对数据库连接进行配置</li>
+<li>statement相关操作，存在<font style="color:orange; font-weight:bold">硬编码</font><br>解决方案：通过<font style="color:orange; font-weight:bold">Mapper映射文件</font>，对statement相关处理进行配置。</li>
+<li>频繁开启数据库连接，会降低数据库处理性能。<br>解决方案：通过Mybatis全局配置文件，配置连接池。</li>
+</ol>
+<h3 id="Mybatis架构原理"><a href="#Mybatis架构原理" class="headerlink" title="Mybatis架构原理"></a>Mybatis架构原理</h3><p>我们要找出的答案就是：从XML配置文件到数据库的距离有多长？<br><img src="https://gitee.com/serendipityh/image/raw/master/img/mybatis-jiagou.png"></p>
+<h4 id="1、MyBatis配置文件"><a href="#1、MyBatis配置文件" class="headerlink" title="1、MyBatis配置文件"></a>1、MyBatis配置文件</h4><p>   a) <u>SqlMapConfig.xml</u>，此文件作为mybatis的全局配置文件，配置了mybatis的运行环境等信息。</p>
+<p>   b) <u>Mapper.xml</u>，此文件作为mybatis的sql映射文件，文件中配置了操作数据库的sql语句。此文件需要在SqlMapConfig.xml中加载。</p>
+<h4 id="2、SqlSessionFactory"><a href="#2、SqlSessionFactory" class="headerlink" title="2、SqlSessionFactory"></a>2、SqlSessionFactory</h4><p>　　通过mybatis环境等配置信息构造SqlSessionFactory，即会话工厂。</p>
+<h4 id="3、sqlSession"><a href="#3、sqlSession" class="headerlink" title="3、sqlSession"></a>3、sqlSession</h4><p>　　通过会话工厂创建sqlSession即会话，程序员通过sqlsession会话接口对数据库进行增删改查操作。</p>
+<h4 id="4、Executor执行器"><a href="#4、Executor执行器" class="headerlink" title="4、Executor执行器"></a>4、Executor执行器</h4><p>　　mybatis底层自定义了Executor执行器接口来具体操作数据库，Executor接口有两个实现，一个是基本执行器（默认）、一个是缓存执行器，sqlsession底层是通过executor接口操作数据库的。</p>
+<h4 id="5、Mapped-Statement"><a href="#5、Mapped-Statement" class="headerlink" title="5、Mapped Statement"></a>5、Mapped Statement</h4><p>　　它也是mybatis一个底层封装对象，它包装了mybatis配置信息及sql映射信息等。mapper.xml文件中一个select\insert\update\delete 标签对应一个Mapped Statement对象，select\insert\update\delete标签的id即是Mapped statement的id。</p>
+<p>　　a)Mapped Statement对sql执行输入参数进行定义，包括HashMap、基本类型、pojo，Executor通过Mapped Statement在执行sql前将输入的java对象映射至sql中，输入参数映射就是jdbc编程中对preparedStatement设置参数。</p>
+<p>　　b)Mapped Statement对sql执行输出结果进行定义，包括HashMap、基本类型、pojo，Executor通过Mapped Statement在执行sql后将输出结果映射至java对象中，输出结果映射过程相当于jdbc编程中对结果的解析处理过程。</p>
+<h2 id="Mybatis"><a href="#Mybatis" class="headerlink" title="Mybatis"></a>Mybatis</h2><h3 id="和-区别"><a href="#和-区别" class="headerlink" title="#{}和${}区别"></a>#{}和${}区别</h3><p> 　 使用#{}参数占位符时，占位符内容会被替换成“？”，然后通过PreparedStatement对象的setXXX()方法为参数占位符设置值；<br>　　而${}参数占位符内容会被直接替换为参数值。使用#{}参数占位符能够有效避免SQL注入问题，所以我们可以优先考虑使用#{}占位符，当#{}参数占位符无法满足需求时，才考虑使用${}参数占位符</p>
+<h3 id="Param注解"><a href="#Param注解" class="headerlink" title="@Param注解"></a>@Param注解</h3><h3 id="MyBatis分页"><a href="#MyBatis分页" class="headerlink" title="MyBatis分页"></a>MyBatis分页</h3><p><a target="_blank" rel="noopener" href="https://github.com/pagehelper/Mybatis-PageHelper/blob/master/wikis/en/HowToUse.md">https://github.com/pagehelper/Mybatis-PageHelper/blob/master/wikis/en/HowToUse.md</a></p>
+<h4 id="添加依赖"><a href="#添加依赖" class="headerlink" title="添加依赖"></a>添加依赖</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;com.github.pagehelper&lt;&#x2F;groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;pagehelper&lt;&#x2F;artifactId&gt;</span><br><span class="line">    &lt;version&gt;5.1.6&lt;&#x2F;version&gt;</span><br><span class="line">&lt;&#x2F;dependency&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h4><p>首先先配置一下mybatis.xml文件,然后再配置文件中写入以下代码</p>
+<plugins> 
+      <plugin interceptor="com.github.pagehelper.PageInterceptor" />
+</plugins>
+
+<h4 id="调用PageHelper"><a href="#调用PageHelper" class="headerlink" title="调用PageHelper"></a>调用PageHelper</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> Result <span class="title">queryRecords</span><span class="params">(Integer currentPage,Integer pageSize)</span> </span>&#123;</span><br><span class="line">        PageHelper.startPage(currentPage, pageSize);</span><br><span class="line">        List list = patientManager.queryRecords();</span><br><span class="line">        <span class="comment">//分页</span></span><br><span class="line">        PageInfo pageInfo = <span class="keyword">new</span> PageInfo(list);</span><br><span class="line">        <span class="keyword">return</span> Result.successResult(pageInfo);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">serendipity</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://kthclose.top/post/1bff3c65.html">https://kthclose.top/post/1bff3c65.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://kthclose.top" target="_blank">serendipity</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/MyBatis/">MyBatis</a><a class="post-meta__tags" href="/tags/%E6%A1%86%E6%9E%B6/">框架</a></div><div class="post_share"><div class="social-share" data-image="https://gitee.com/serendipityh/image/raw/master/img/mybatisCover.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-full"><a href="/post/4b66427.html"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">md语法</div></div></a></div></nav></article></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By serendipity</div><!--if theme.footer.copyright//.framework-info
+//  span= _p('footer.framework') + ' '
+ // a(href='https://hexo.io')= 'Hexo'
+ // span.footer-separator |
+ // span= _p('footer.theme') + ' '
+ // a(href='https://github.com/jerryc127/hexo-theme-butterfly')= 'Butterfly'--><div class="footer_custom_text">Hi, welcome to my <a href="https://kthclose.top/">blog</a>!</div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></section><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',()=> {preloader.endLoading()})</script><div class="js-pjax"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><canvas class="fireworks" mobile="false"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/fireworks.min.js"></script><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script></div></body></html>

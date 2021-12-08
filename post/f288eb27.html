@@ -1,0 +1,173 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>记录@RequestBody注解无法映射首字母大写属性 | serendipity</title><meta name="keywords" content="spring,总结"><meta name="author" content="serendipity"><meta name="copyright" content="serendipity"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="问题User类有username、password、Id三个字段，当用@RequestBody注解接收时，会出现首字母大写的Id属性无法赋值。 分析@RequestBody注解是是将http请求报文转成对象，通过对象的setxxx()方法进行赋值注入 首字母大写映射DeserializerCache的findValueDeserializer方法会缓存对象的信息BeanDeserializerFa">
+<meta property="og:type" content="article">
+<meta property="og:title" content="记录@RequestBody注解无法映射首字母大写属性">
+<meta property="og:url" content="https://kthclose.top/post/f288eb27.html">
+<meta property="og:site_name" content="serendipity">
+<meta property="og:description" content="问题User类有username、password、Id三个字段，当用@RequestBody注解接收时，会出现首字母大写的Id属性无法赋值。 分析@RequestBody注解是是将http请求报文转成对象，通过对象的setxxx()方法进行赋值注入 首字母大写映射DeserializerCache的findValueDeserializer方法会缓存对象的信息BeanDeserializerFa">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/serendipityh/image/raw/master/img/e3d457a43f16ea6b6f2219347a296ada.jpg">
+<meta property="article:published_time" content="2021-11-17T12:02:18.000Z">
+<meta property="article:modified_time" content="2021-11-18T12:17:00.381Z">
+<meta property="article:author" content="serendipity">
+<meta property="article:tag" content="spring">
+<meta property="article:tag" content="总结">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/serendipityh/image/raw/master/img/e3d457a43f16ea6b6f2219347a296ada.jpg"><link rel="shortcut icon" href="/image/butterfly/favicon.png"><link rel="canonical" href="https://kthclose.top/post/f288eb27.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  hexoversion: '5.2.0',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  ClickShowText: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: true,
+  postUpdate: '2021-11-18 20:17:00'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {
+  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+
+  const autoChangeMode = 'false'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }
+})()</script><meta name="generator" content="Hexo 5.2.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/image/butterfly/avatar.jpeg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">28</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">17</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/categories/"><div class="headline">分类</div><div class="length_num">14</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div></div></div></div><div id="body-wrap"><div id="web_bg"></div><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%97%AE%E9%A2%98"><span class="toc-number">1.</span> <span class="toc-text">问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E6%9E%90"><span class="toc-number">2.</span> <span class="toc-text">分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A6%96%E5%AD%97%E6%AF%8D%E5%A4%A7%E5%86%99%E6%98%A0%E5%B0%84"><span class="toc-number">2.1.</span> <span class="toc-text">首字母大写映射</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-JsonProperty"><span class="toc-number">2.2.</span> <span class="toc-text">使用@JsonProperty</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">3.</span> <span class="toc-text">总结</span></a></li></ol></div></div></div><header class="post-bg" id="page-header" style="background-image: url(https://gitee.com/serendipityh/image/raw/master/img/e3d457a43f16ea6b6f2219347a296ada.jpg)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">serendipity</a></span><span id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div></div><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">记录@RequestBody注解无法映射首字母大写属性</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-11-17T12:02:18.000Z" title="发表于 2021-11-17 20:02:18">2021-11-17</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-11-18T12:17:00.381Z" title="更新于 2021-11-18 20:17:00">2021-11-18</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%B0%E5%BD%95/">记录</a></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>User类有username、password、Id三个字段，当用@RequestBody注解接收时，会出现首字母大写的Id属性无法赋值。<br><img src="https://gitee.com/serendipityh/image/raw/master/img/11DDAFAE-079E-44db-827B-CF23F9ED0E05.png"><br><img src="https://gitee.com/serendipityh/image/raw/master/img/D100029E-8265-4bec-961F-EE3C281678D4.png"></p>
+<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>@RequestBody注解是是将http请求报文转成对象，通过对象的setxxx()方法进行赋值注入</p>
+<h3 id="首字母大写映射"><a href="#首字母大写映射" class="headerlink" title="首字母大写映射"></a>首字母大写映射</h3><p>DeserializerCache的findValueDeserializer方法<br>会缓存对象的信息<br><img src="https://gitee.com/serendipityh/image/raw/master/img/96E50C1F-0719-47f6-9317-E458B636BC1D.png"><br>BeanDeserializerFactory 的addBeanProps方法<br><img src="https://gitee.com/serendipityh/image/raw/master/img/8ec1fee5-0329-4b86-9fde-3c894845ca3e.png"><br>BeanDeserializerdeserializeFromObject方法 将http请求的值与属性进行对应赋值<br><img src="https://gitee.com/serendipityh/image/raw/master/img/D75E6CC6-613E-4b1e-829B-B8558A88E7E4.png"><br>赋值后的对象<br><img src="https://gitee.com/serendipityh/image/raw/master/img/dec26517-2ad5-4a08-97ba-be4f7a7681d9.png"></p>
+<hr>
+<h3 id="使用-JsonProperty"><a href="#使用-JsonProperty" class="headerlink" title="使用@JsonProperty"></a>使用@JsonProperty</h3><p>使用@JsonProperty注解后首字母大写成功映射</p>
+<blockquote>
+<p>@JsonProperty(“Id”)<br>  private String Id;</p>
+</blockquote>
+<p><img src="https://gitee.com/serendipityh/image/raw/master/img/671747B9-F38C-4f6b-B74C-8F8EC8665629.png"><br><img src="https://gitee.com/serendipityh/image/raw/master/img/6F0776D7-FDD3-4f50-B625-B97655D203E6.png"><br><img src="https://gitee.com/serendipityh/image/raw/master/img/6E40A5B2-A432-40c5-9941-7FE87A439007.png"></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>id、Id生成的set方式都是setId(),通过缓存POJO类属性字段默认都是id,而http请求中的还是Id无法映射到对象属性，就无法注入。</p>
+<p>参考文章:<br><a target="_blank" rel="noopener" href="https://www.pianshen.com/article/55052049662/#2RequestBody_51">https://www.pianshen.com/article/55052049662/#2RequestBody_51</a></p>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">serendipity</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://kthclose.top/post/f288eb27.html">https://kthclose.top/post/f288eb27.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://kthclose.top" target="_blank">serendipity</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/spring/">spring</a><a class="post-meta__tags" href="/tags/%E6%80%BB%E7%BB%93/">总结</a></div><div class="post_share"><div class="social-share" data-image="https://gitee.com/serendipityh/image/raw/master/img/e3d457a43f16ea6b6f2219347a296ada.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/post/8e5bd85e.html"><img class="prev-cover" src="https://gitee.com/serendipityh/image/raw/master/img/1bf6d8cc6167c56c318e89f0ef82050e.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Java的值传递和引用传递(转)</div></div></a></div><div class="next-post pull-right"><a href="/post/adbd2430.html"><img class="next-cover" src="https://gitee.com/serendipityh/image/raw/master/img/4b5177e0a2366dd337fd7b779ecb446c.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Redis面试题</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/post/34b74872.html" title="BeanFactory 和 FactoryBean 的区别"><img class="cover" src="https://gitee.com/serendipityh/image/raw/master/img/292c7f02a79793e8584e5352aa7062b8.jpg"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-09-15</div><div class="title">BeanFactory 和 FactoryBean 的区别</div></div></a></div><div><a href="/post/4f4c130b.html" title="Spring-IoC容器-概述"><img class="cover" src="https://gitee.com/serendipityh/image/raw/master/img/b2f62f2187c904ffcaed90ba342f984d.jpg"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-07-01</div><div class="title">Spring-IoC容器-概述</div></div></a></div><div><a href="/post/4e9d68c3.html" title="Spring循环依赖问题"><img class="cover" src="https://gitee.com/serendipityh/image/raw/master/img/292c7f02a79793e8584e5352aa7062b8.jpg"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-09-28</div><div class="title">Spring循环依赖问题</div></div></a></div><div><a href="/post/32922a54.html" title="Spring的AOP是怎么实现的"><img class="cover" src="https://gitee.com/serendipityh/image/raw/master/img/292c7f02a79793e8584e5352aa7062b8.jpg"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-09-19</div><div class="title">Spring的AOP是怎么实现的</div></div></a></div><div><a href="/post/e2fdcf1f.html" title="Spring-IoC容器-初始化"><img class="cover" src="https://gitee.com/serendipityh/image/raw/master/img/6f491f705a299b3fdd571aa5b095058a.jpg"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-07-12</div><div class="title">Spring-IoC容器-初始化</div></div></a></div><div><a href="/post/bf3261b.html" title="Spring-IoC容器-依赖注入"><img class="cover" src="https://gitee.com/serendipityh/image/raw/master/img/3f48d01eb2a37eb87dee9ba5593d6407.jpg"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-07-30</div><div class="title">Spring-IoC容器-依赖注入</div></div></a></div></div></div></article></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By serendipity</div><!--if theme.footer.copyright//.framework-info
+//  span= _p('footer.framework') + ' '
+ // a(href='https://hexo.io')= 'Hexo'
+ // span.footer-separator |
+ // span= _p('footer.theme') + ' '
+ // a(href='https://github.com/jerryc127/hexo-theme-butterfly')= 'Butterfly'--><div class="footer_custom_text">Hi, welcome to my <a href="https://kthclose.top/">blog</a>!</div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></section><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',()=> {preloader.endLoading()})</script><div class="js-pjax"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><canvas class="fireworks" mobile="false"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/fireworks.min.js"></script><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script></div></body></html>
